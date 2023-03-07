@@ -1,0 +1,1 @@
+https://www.figma.com/file/Lt2OmYT9nf6hmAWgQV7EZ9/Hotel-Booking-Cancellation-Prediction-Web-design?node-id=0%3A1&t=LwjsfjdaGfndV1VO-1
