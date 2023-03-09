@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .download-links {
+            text-align: center;
+            margin-top: 600px; 
+        }
+
+        .download-link {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #FF69B4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="download-links">
+        {% for filename in files %}
+            <a class="download-link" href="{{ url_for('download_file', filename=filename) }}">{{ filename }}</a>
+        {% endfor %}
+    </div>
+    <div class="back-button">
+        <a href="/">Back</a>
+    </div>
+</body>
+</html>
