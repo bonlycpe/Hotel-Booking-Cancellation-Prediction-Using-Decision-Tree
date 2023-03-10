@@ -19,34 +19,53 @@
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
         }
 
-        .back-button {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: #FF69B4;
+        nav {
+            background-color: #F96060;
             color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        nav a {
+            color: white;
             text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .centered {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: -120px;
         }
 
     </style>
 </head>
 <body>
+    <nav>
+        <h1><img src="{{ url_for('static', filename='picture/logo.png') }}" style="height:100px;"></h1>
+        <div>
+            <a href="/">กลับสู่หน้าอัพโหลดไฟล์</a>
+        </div>
+    </nav>
+
+    <div class="centered">
+        <h1>ผลการประมวลผล</h1>
+
+    </div>
+
     <div class="download-links">
         {% for filename in files %}
-            <a class="download-link" href="{{ url_for('download_file', filename=filename) }}">{{ filename }}</a>
+            <a class="download-link" href="{{ url_for('download_file', filename=filename) }}">ดาวโหลดผลการประมวลผล</a>
         {% endfor %}
     </div>
-    <div class="back-button">
-        <a href="/">Back</a>
-    </div>
+
 </body>
 </html>

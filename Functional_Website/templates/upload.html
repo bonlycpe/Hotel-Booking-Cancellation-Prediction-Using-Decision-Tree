@@ -17,15 +17,54 @@
             background-color: skyblue;
             font-size: 1.2em;
             padding: 10px 20px;
-            border-radius: 10px; /* add border radius */
-            box-shadow: 2px 2px 2px rgba(0,0,0,0.3); /* add box shadow */
+            border-radius: 10px; 
+            box-shadow: 2px 2px 2px rgba(0,0,0,0.3); 
         }
+        
+        nav {
+            background-color: #F96060;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .centered {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: -120px;
+        }
+
     </style>
 </head>
 <body>
+    <nav>
+        <h1><img src="{{ url_for('static', filename='picture/logo.png') }}" style="height:100px;"></h1>
+    </nav>
+
+    <div class="centered">
+        <h1>Welcome To Hotel Booking Cancellation Prediction System</h1>
+        <h1>กรุณาอัพโหลดไฟล์ข้อมูลการจองโรงแรมของท่านเข้าสู่ระบบ</h1>
+        <h3>โดยข้อมูลเป็นไฟล์ CSV </h3>
+    </div>
+    
+
     <form action="/" method="POST" enctype="multipart/form-data">
         <label for="file"></label>
-        <br />
+        <br/>
         <input type="file" id="file" name="file">
         <br />
         <button>Upload</button>
