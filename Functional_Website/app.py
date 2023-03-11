@@ -23,14 +23,10 @@ def index():
             save_location = os.path.join('input', new_filename)
             file.save(save_location)
 
-            output_file = dst_process(save_location)
-            return redirect(url_for('download'))
+            output_file,df = dst_process(save_location)
+            return render_template('download.html', files=os.listdir('output'), table = df.to_html())
 
     return render_template('upload.html')
-
-@app.route('/download')
-def download():
-    return render_template('download.html', files=os.listdir('output'))
 
 @app.route('/download/<filename>')
 def download_file(filename):
