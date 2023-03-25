@@ -2,65 +2,112 @@
 <html>
 <head>
     <style>
-        form {
-            text-align: center;
-            margin-top: 600px; 
-        }
-
-        input[type=file] {
-            color: blue;
-            padding: 10px 20px;
-            font-size: 1.2em;
-        }
-
-        button {
-            background-color: skyblue;
-            font-size: 1.2em;
-            padding: 10px 20px;
-            border-radius: 10px; 
-            box-shadow: 2px 2px 2px rgba(0,0,0,0.3); 
-        }
-        
         nav {
-            background-color: #F96060;
-            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px;
+            background-color: #F96060;
         }
 
-        nav a {
-            color: white;
+        nav img {
+            margin-right:auto; margin-left:auto; 
+            height: 150px;
+            width: 350px;
+            text-indent: -9999px;
+        }
+
+        @media only screen and (max-width: 620px) {
+            nav img {
+                height: 50px;
+            }
+        }
+
+        div {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+        }
+
+        #upload-instruction {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #0095a8a9;
+            color: rgb(0, 0, 0);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+
+        .download-link {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 4px;
             text-decoration: none;
-            margin: 0 10px;
+            margin: 10px;
         }
 
-        nav a:hover {
-            text-decoration: underline;
+        .download-link:hover {
+            background-color: #3e8e41;
         }
 
-        .centered {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            margin-top: -120px;
+        input[type="file"] {
+            background-color: #000000a9;
+            color: #fff;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #ff46469c;
+            color: #fff;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
         }
 
     </style>
 </head>
 <body>
     <nav>
-        <h1><img src="{{ url_for('static', filename='picture/logo.png') }}" style="height:100px;"></h1>
+        <a href="/">
+            <img src="{{ url_for('static', filename='picture/logo.png') }}">
+        </a>
     </nav>
 
-    <div class="centered">
-        <h1>Welcome To Hotel Booking Cancellation Prediction System</h1>
-        <h1>กรุณาอัพโหลดไฟล์ข้อมูลการจองโรงแรมของท่านเข้าสู่ระบบ</h1>
-        <h3>โดยข้อมูลเป็นไฟล์ CSV </h3>
+    <div>
+        <h2>กรุณาอัพโหลดไฟล์ข้อมูลการจองโรงแรมของท่านเข้าสู่ระบบ โดยข้อมูลเป็นไฟล์ CSV </h2>
     </div>
-    
 
     <form action="/" method="POST" enctype="multipart/form-data">
         <label for="file"></label>
@@ -69,5 +116,44 @@
         <br />
         <button>Upload</button>
     </form>
+
+
+    {% if invalid %}
+    <div id="alert-container" style="color: #fc0202; padding: 10px;">
+      <div id="alert-message">ข้อมูลของท่านไม่ถูกต้อง</div>
+    </div>
+    <script>
+      var alertContainer = document.getElementById("alert-container");
+      var alertMessage = document.getElementById("alert-message");
+      alertContainer.style.display = "flex";
+      alertMessage.style.margin = "auto";
+    //   setTimeout(function() {
+    //     alertContainer.style.display = "none";
+    //   }, 3000);
+    </script>
+    {% endif %}
+    
+
+    <div>
+        <h2>โดยมีรายละเอียดข้อมูล ตังตาราง </h2>
+    </div>
+
+    <div>
+        <a class="download-link" href="{{ url_for('download_example_file', filename='variable.csv') }}" download>
+            ดาวโหลดรายละเอียดตัวอย่างข้อมูล
+        </a>
+    </div>
+
+
+    <div>
+        <table>
+            {{ table | safe }}
+        </table>
+    </div>
+
+    <div id="upload-instruction">
+        <!-- <h3>โดยข้อมูลเป็นไฟล์ CSV </h3> -->
+    </div>
+    
 </body>
 </html>
