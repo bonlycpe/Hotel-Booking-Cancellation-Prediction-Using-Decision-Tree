@@ -23,4 +23,5 @@ adr,Average Daily Rate,Numeric
 required_car_parking_spaces,Number of car parking spaces required by the customer,Integer
 total_of_special_requests,Number of special requests made by the customer (e.g. twin bed or high floor),Integer
 reservation_status_date,Date at which the last status was set. This variable can be used in conjunction with the†ReservationStatus†to understand when was the booking canceled or when did the customer checked-out of the hotel,Date
+ «— ¥’, «— ¥’§’√—ø°ø°,
 name,ID that use to identify customer,String / Integer
