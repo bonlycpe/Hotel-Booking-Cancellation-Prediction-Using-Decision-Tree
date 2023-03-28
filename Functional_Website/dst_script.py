@@ -15,13 +15,44 @@ from sklearn.tree import DecisionTreeClassifier
 
 
 def input_validation(filename):
+
+    FeatureList = [
+    'hotel',
+    'lead_time',
+    'arrival_date_month',
+    'arrival_date_week_number',
+    'arrival_date_day_of_month',
+    'stays_in_weekend_nights',
+    'stays_in_week_nights',
+    'adults',
+    'children',
+    'babies',
+    'meal',
+    'market_segment',
+    'distribution_channel',
+    'is_repeated_guest',
+    'previous_cancellations',
+    'previous_bookings_not_canceled',
+    'reserved_room_type',
+    'deposit_type',
+    'agent',
+    'company',
+    'customer_type',
+    'adr',
+    'required_car_parking_spaces',
+    'total_of_special_requests',
+    'reservation_status_date',
+    'name'
+    ]
+
     df = pd.read_csv(filename)
-    df_val = pd.read_csv(f"validation/input_val.csv")
 
-    if df.columns.equals(df_val.columns):
-        return True
-
-    return False
+    df_columns = list(df.columns)
+    for feature in FeatureList:
+        if feature not in df_columns:
+            return False
+        
+    return True
 
 
 ###ใช้แก้ข้อมูลพวก NULL ใน Dataframe
@@ -71,13 +102,6 @@ def FilterColumn(df):
     'total_of_special_requests',
     'reservation_status_date',
     'name'
-    
-    ,'Test1'
-    ,'Test2'
-    ,'Test3'
-    ,'Test4'
-    ,'Test5'
-    
     ]
 
     ###   https://www.sciencedirect.com/science/article/pii/S2352340918315191
@@ -115,7 +139,7 @@ def FilterColumn(df):
 #Return DF-X และ DFชื่อคน
 def PreProcessingData(df):
     
-    dfname = df["name"]
+    dfname = df.copy()
     df.drop(['name'] , axis = 1, inplace = True)
     
     df = FilterColumn(df)
@@ -177,20 +201,26 @@ def dst_process(filename):
     name = filename.split('\\')
     name = name[len(name)-1].split('.')
     name = name[0]
+
     df, dfName = PreProcessingData(pd.read_csv(filename))
-    dfName.name = "ชื่อ"
-    
+
     dtc = loadModel(r'./dtc.joblib')  #โหลด Model Decision Tree
     pred = dtc.predict(df)   #Predict ว่ามีโอกาส Cancel   (Return Array)
-    pred = pd.DataFrame(pred, columns = ['สถานะการจอง'])  #แปลง Array เป็น df
+    pred = pd.DataFrame(pred, columns = ['Status'])  #แปลง Array เป็น df
     df = pd.concat([dfName, pred], axis = 1) #เอาผล pred มาต่อกับ name
 
-    df['สถานะการจอง'] = df['สถานะการจอง'].apply(lambda x: 'ไม่ยกเลิก' if x == 1 else 'ยกเลิก')
+    df['Status'] = df['Status'].apply(lambda x: 'Cancel' if x == 1 else 'Not Cancel')
 
-    # df = df[df['is_possible_to_cancel']=="Cancel"]
-    
-    # output_file = f'result_{name}.csv'
+    if "Cancel" in df['Status'].values:
+        C = df['Status'].value_counts()["Cancel"]
+    else: C=0
 
-    df.to_csv(f"output/result_{name}.csv")
+    if "Not Cancel" in df['Status'].values:
+        N = df['Status'].value_counts()["Not Cancel"]
+    else: N=0
 
-    return df
+    #dfChart = [df['Status'].value_counts()["Cancel"],df['Status'].value_counts()["Not Cancel"]]
+
+    df.to_csv(f"output/result.csv",encoding='utf-8-sig')
+
+    return df,C,N

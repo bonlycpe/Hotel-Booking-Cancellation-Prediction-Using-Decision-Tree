@@ -1,2 +1,2 @@
-%cd%
-start jupyter notebook
+call activate ITMAI
+call jupyter notebook

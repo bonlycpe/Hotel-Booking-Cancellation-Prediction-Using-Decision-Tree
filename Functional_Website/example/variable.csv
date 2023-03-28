@@ -1,6 +1,6 @@
 hotel,A type of hotel (Resort Hotel / City Hotel),Categorical
 lead_time,Number of days that elapsed between the entering date of the booking into the PMS and the arrival date,Integer
-arrival_date_month,Month of arrival date with 12 categories: “January” to “December”,Categorical
+arrival_date_month,"Month of arrival date with 12 categories: ""January"" to ""December""",Categorical
 arrival_date_week_number,Week number of the arrival date,Integer
 arrival_date_day_of_month,Day of the month of the arrival date,Integer
 stays_in_weekend_nights,Number of weekend nights (Saturday or Sunday) the guest stayed or booked to stay at the hotel,Integer
@@ -9,9 +9,9 @@ adults,Number of adults,Integer
 children,Number of children,Integer
 babies,Number of babies,Integer
 meal,Type of meal booked. Categories are presented in standard hospitality meal,Categorical
-market_segment,"Market segment designation. In categories, the term “TA” means “Travel Agents” and “TO” means “Tour Operators”",Categorical
-distribution_channel,Booking distribution channel. The term “TA” means “Travel Agents” and “TO” means “Tour Operators”,Categorical
-is_repeated_guest,Value indicating if the booking name was from a repeated guest (1) or not (0),Boolean
+market_segment,"Market segment designation. In categories, the term ""TA"" means ""Travel Agents"" and ""TO"" means ""Tour Operators""",Categorical
+distribution_channel,"Booking distribution channel. The term ""TA"" means ""Travel Agents"" and ""TO"" means ""Tour Operators""",Categorical
+is_repeated_guest,Value indicating if the booking name was from a repeated guest (1) or not (0),Categorical
 previous_cancellations,Number of previous bookings that were cancelled by the customer prior to the current booking,Integer
 previous_bookings_not_canceled,Number of previous bookings not cancelled by the customer prior to the current booking,Integer
 reserved_room_type,Code of room type reserved. Code is presented instead of designation for anonymity reasons,Categorical
@@ -23,5 +23,4 @@ adr,Average Daily Rate,Numeric
 required_car_parking_spaces,Number of car parking spaces required by the customer,Integer
 total_of_special_requests,Number of special requests made by the customer (e.g. twin bed or high floor),Integer
 reservation_status_date,Date at which the last status was set. This variable can be used in conjunction with the ReservationStatus to understand when was the booking canceled or when did the customer checked-out of the hotel,Date
-ÊÇÑÊ´Õ,ÊÇÑÊ´Õ¤ÕÃÑ¿¡¿¡,
-name,ID that use to identify customer,String / Integer
+name,ID that use to identify customer,Categorical

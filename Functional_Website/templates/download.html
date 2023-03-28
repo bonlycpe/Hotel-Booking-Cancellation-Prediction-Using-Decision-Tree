@@ -32,12 +32,6 @@
             justify-content: center;
         }
 
-
-        a.back-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
         a.back-btn {
             padding: 50px 20px;
             background-color: #eedf5c;
@@ -60,26 +54,11 @@
             background-color: #3e8e41;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 0 auto;
-            margin-bottom: 20px;
+        #CancellationPrediction {
+            margin: auto;
+            margin-bottom: 50px;
         }
 
-        th, td {
-            text-align: center;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #808080a9;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
 
     </style>
 </head>
@@ -91,18 +70,53 @@
         <a href="/" class="back-btn">ย้อนกลับ</a>
     </nav>
 
-    <div class="download-links">
+
+    <div>
         <h1 style="color: #000000;">ผลการประมวลผล</h1>
+        <p>จำนวนผู้ที่ยกเลิก: {{ C }}</p>
+        <p>จำนวนผู้ที่ไม่ยกเลิก: {{ N }}</p>
+        <canvas id="CancellationPrediction"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var C = {{ C }};
+        var N = {{ N }};
+        var ctx = document.getElementById('CancellationPrediction').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Cancel', 'Not Cancel'],
+                datasets: [{
+                    label: 'CancellationPrediction',
+                    data: [C,N],
+                    backgroundColor: [
+                        '#F96060',
+                        '#4CAF50',
+                    ],
+                    borderColor: [
+                        '#FFFF',
+                        '#FFFF',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                title: {
+                    display: true,
+                    text: 'My Chart Title'
+                }
+            }
+        });
+    </script>
+
+    <div class="download-links">
         {% for filename in files %}
             <a class="download-link" href="{{ url_for('download_file', filename=filename) }}">ดาวโหลดผลการประมวลผล</a>
         {% endfor %}
     </div>
-    
-    <div>
-        <table>
-            {{ table | safe }}
-        </table>
-    </div>
-
+        
 </body>
 </html>

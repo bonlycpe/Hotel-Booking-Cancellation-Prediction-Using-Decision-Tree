@@ -1,10 +1,11 @@
 import os
-
+import json
 import pandas as pd
 from flask import Flask, request, render_template, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from dst_script import dst_process,input_validation
+import numpy as np
 
 ALLOWED_EXTENSIONS = set(['csv'])
 
@@ -29,8 +30,8 @@ def index():
             if not input_validation(save_location):
                 invalid = True
             else:
-                df = dst_process(save_location)
-                return render_template('download.html', files=os.listdir('output'), table = df.to_html())
+                df,C,N = dst_process(save_location)
+                return render_template('download.html', files=os.listdir('output'), table = df.to_html() , C=C,N=N)
         else:
             invalid = True
 
