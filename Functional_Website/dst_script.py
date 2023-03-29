@@ -1,18 +1,8 @@
-import csv
-import os
-from flask import Flask, render_template
-from collections import defaultdict
-from datetime import datetime
-from decimal import Decimal
 import pandas as pd
 import numpy as np
-import missingno as msno
 
 import warnings
 warnings.filterwarnings('ignore')
-
-from sklearn.tree import DecisionTreeClassifier
-
 
 def input_validation(filename):
 
@@ -42,7 +32,6 @@ def input_validation(filename):
     'required_car_parking_spaces',
     'total_of_special_requests',
     'reservation_status_date',
-    'name'
     ]
 
     df = pd.read_csv(filename)
@@ -101,7 +90,6 @@ def FilterColumn(df):
     'required_car_parking_spaces',
     'total_of_special_requests',
     'reservation_status_date',
-    'name'
     ]
 
     ###   https://www.sciencedirect.com/science/article/pii/S2352340918315191
@@ -140,7 +128,6 @@ def FilterColumn(df):
 def PreProcessingData(df):
     
     dfname = df.copy()
-    df.drop(['name'] , axis = 1, inplace = True)
     
     df = FilterColumn(df)
     if (not isinstance(df, pd.DataFrame)):
@@ -207,9 +194,10 @@ def dst_process(filename):
     dtc = loadModel(r'./dtc.joblib')  #โหลด Model Decision Tree
     pred = dtc.predict(df)   #Predict ว่ามีโอกาส Cancel   (Return Array)
     pred = pd.DataFrame(pred, columns = ['Status'])  #แปลง Array เป็น df
-    df = pd.concat([dfName, pred], axis = 1) #เอาผล pred มาต่อกับ name
+    df = pd.concat([dfName, pred.reset_index(drop=True)], axis = 1) #เอาผล pred มาต่อกับ name
 
     df['Status'] = df['Status'].apply(lambda x: 'Cancel' if x == 1 else 'Not Cancel')
+    df.drop(['Unnamed: 31'])
 
     if "Cancel" in df['Status'].values:
         C = df['Status'].value_counts()["Cancel"]
@@ -218,8 +206,6 @@ def dst_process(filename):
     if "Not Cancel" in df['Status'].values:
         N = df['Status'].value_counts()["Not Cancel"]
     else: N=0
-
-    #dfChart = [df['Status'].value_counts()["Cancel"],df['Status'].value_counts()["Not Cancel"]]
 
     df.to_csv(f"output/result.csv",encoding='utf-8-sig')
 
